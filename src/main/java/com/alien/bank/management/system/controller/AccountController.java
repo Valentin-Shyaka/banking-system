@@ -1,7 +1,13 @@
 package com.alien.bank.management.system.controller;
 
 import com.alien.bank.management.system.model.ResponseModel;
+import com.alien.bank.management.system.model.authentication.RegisterRequestModel;
 import com.alien.bank.management.system.service.AccountService;
+
+import com.alien.bank.management.system.model.account.AccountResponseModel;
+
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("/accounts")

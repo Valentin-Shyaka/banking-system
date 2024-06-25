@@ -10,8 +10,11 @@ import com.alien.bank.management.system.model.transaction.TransactionResponseMod
 import com.alien.bank.management.system.model.transaction.WithdrawRequestModel;
 import com.alien.bank.management.system.repository.AccountRepository;
 import com.alien.bank.management.system.repository.TransactionRepository;
+import com.alien.bank.management.system.service.EmailService;
 import com.alien.bank.management.system.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,9 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
+
+    @Autowired
+    private EmailService emailService;
 
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
@@ -34,6 +40,12 @@ public class TransactionServiceImpl implements TransactionService {
 
         Long transactionId = performDeposit(account, request.getAmount());
 
+
+        
+        
+        emailService.sendTransactionEmail("vava1lantern7@gmail.com","Deposit Notification",  "A withdraw of " + request.getAmount() + " has been made to your account.");
+
+       
         return transactionMapper.toResponseModel(transactionId, request.getAmount(), account.getBalance());
     }
 
@@ -45,6 +57,8 @@ public class TransactionServiceImpl implements TransactionService {
 
         Long transactionId = performWithdrawal(account, request.getAmount());
 
+        emailService.sendTransactionEmail("vava1lantern7@gmail.com","Withdraw Notification",  "A deposit of " + request.getAmount() + " has been made to your account.");
+        
         return transactionMapper.toResponseModel(transactionId, request.getAmount(), account.getBalance());
     }
 
